@@ -6,6 +6,9 @@ import com.ticketflow.customerservice.service.CustomerService;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
+
+import org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,17 +25,26 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class CustomerController {
 
     private final CustomerService service;
+    private final ApplicationContext applicationContext;
 
-    public CustomerController(CustomerService service) {
+
+    public CustomerController(CustomerService service, ApplicationContext applicationContext) {
         this.service = service;
+        this.applicationContext = applicationContext;
     }
 
     @PostMapping
     ResponseEntity<CustomerResponse> create(@Valid @RequestBody CustomerRequest request) {
+        System.out.println("ana hna");
         CustomerResponse created = CustomerResponse.from(service.create(request));
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(created.id()).toUri();
         return ResponseEntity.created(location).body(created);
+    }
+
+    @GetMapping("/instance/test")
+    public String getInstance() {
+        return "Handled by port: " + ((ServletWebServerApplicationContext)applicationContext).getWebServer().getPort();
     }
 
     @GetMapping("/{id}")

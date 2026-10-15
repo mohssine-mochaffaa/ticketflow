@@ -6,8 +6,9 @@
 		<groupId>com.ticketflow</groupId>
 		<artifactId>ticketflow-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../../pom.xml</relativePath> <!-- lookup parent from repository -->
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
+
 	<artifactId>customer-service</artifactId>
 	<name>customer-service</name>
 	<description>customer-service</description>
@@ -42,6 +43,10 @@
 			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
